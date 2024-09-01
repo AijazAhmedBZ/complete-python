@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-
+from bson import ObjectId
 client = MongoClient("mongodb+srv://youtubepy:youtubepy@cluster0.rgtgm.mongodb.net/")
 
 db = client["ytmanager"]
@@ -18,14 +18,14 @@ def list_videos():
         print(f"ID: {video['_id']}, Name: {video['name']}")
 
 def update_video():
-    name = input("Enter video name to update: ")
+    id = input("Enter video ID to update: ")
     new_name = input("Enter new video name: ")
-    video_collection.update_one({"name": name}, {"$set": {"name": new_name}})
+    video_collection.update_one({"_id":ObjectId(id)}, {"$set": {"name": new_name}})
     print("Video updated successfully")
 
 def delete_video():
-    name = input("Enter video name to delete: ")
-    video_collection.delete_one({"name": name})
+    id = input("Enter video ID to delete: ")
+    video_collection.delete_one({"_id":ObjectId(id)})
     print("Video deleted successfully")
 
 
